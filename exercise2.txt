@@ -1,0 +1,43 @@
+#Aanmaak van exercise2:
+touch exercise2.txt
+gedit exercise2.txt
+
+#Normalisation
+#UNF
+
+DB(StaffNo, DentistName, PatientNo, PatientName, AppointmentDate, AppointmentTime, SurgeryNo)
+
+#1NF 
+
+DB_staff (StaffNo(PK), DentistName)
+
+DB_patient (PatientNo(PK), PatientName, AppointmentDate, AppointmenTime, SurgeryNo)
+
+#2NF
+
+DB_staff (StaffNo(PK), DentistName, SurgeryNo)
+
+DB_patient (PatientNo(PK), PatientName, AppointmentDate, AppointmentTime, SurgeryNo)
+
+#3NF
+
+DB_staff (StaffNo(PK), DentistName, SurgeryNo)
+
+DB_patient (PatientNo(PK), PatientName, AppointmentDate, AppointmentTime, SurgeryNo)
+
+#BCNF
+
+DB_staff (StaffNo(PK), DentistName, SurgeryNo(FK))
+
+DB_patient (PatientNo(PK), PatientName, SurgeryNo(FK))
+
+DB_Surgery (SurgeryNo(PK), AppointmentDate, AppointmentTime)
+
+#add to github
+
+git status
+git add exercise2.txt
+git commit -m "volledig"
+git push -u origin master
+
+

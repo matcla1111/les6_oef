@@ -1,0 +1,63 @@
+#Inloggen als root op mysql
+1) Create a new database called vacation
+$mysql -u root -p
+CREATE database vacation;
+3) Make sure you have sufficient right on this database
+
+GRANT ALL prv ON vacation.* TO 'guest'@'localhost';
+
+2) Create a new database called vacation
+$mysql vacation < vacation.sql
+$mysql
+SHOW databases;
+USE vacation; 
+SHOW tables FROM vaction;
+SELECT * FROM booking; of SELECT * FROM guest; of SELECT * FROM hotel; of SELECT * FROM room;
+
+#Exercises 
+
+5) List the names and addresses of all guests in London, alphabetically ordered by  name.
+SELECT guestname, guestaddress, city FROM guest JOIN booking ON guest.guestno = booking.guestno JOIN hotel ON booking.hotelno = hotel.hotelno WHERE city="London" ORDER BY guestname ASC;
+SELECT guestname, guestaddress FROM guest WHERE guestaddress like "%London%";
+
+6) List all double or family rooms with a price below £40.00 per night, cheapest first.
+SELECT roomno, type, price FROM room WHERE type="family" OR type="double" AND price<40.00 ORDER BY price ASC;
+
+7) List the bookings for which no date_to has been specified.
+SELECT * FROM booking WHERE dateto IS NULL;
+
+8) What is the average price of a room?
+SELECT avg(price) as average_price FROM room;
+
+9) What is the total revenue per night from all double rooms?
+SELECT sum(price) as total_revenue FROM room WHERE type="double";
+
+10) How many different guests have made bookings for August?
+SELECT guestno, dateto FROM booking WHERE MONTH (dateto)=08 AND MONTH (datefrom)=08; (niets terugtevinden, er is geen booking in augustus)
+
+11) List the price and type of all rooms at the Grosvenor Hotel.
+SELECT hotelname, type, price FROM room JOIN hotel ON room.hotelno = hotel.hotelno WHERE hotelname="Grosvenor";
+
+12) List all guests currently staying at the Grosvenor Hotel.
+SELECT guestno, datefrom, dateto, hotelname FROM booking JOIN hotel ON booking.hotelno = hotel.hotelno WHERE hotelname="Grosvenor" AND datefrom=<curdate() and dateto>=curdate();
+
+13)List the details of all rooms at the Grosvenor Hotel, including the name of the guest  staying in the room, if the room is occupied.
+SELECT type, price, hotelname, guestname, datefrom, dateto FROM room JOIN hotel ON room.hotelno = hotel.hotelno JOIN booking ON hotel.hotelno = booking.hotelno JOIN guest ON booking.guestno = guest.guestno WHERE hotelname="Grosvenor" AND datefrom IS NOT NULL AND dateto IS NOT NULL;
+
+14) What is the total income from bookings for the Grosvenor Hotel today?
+SELECT sum(price) as total_income, hotelname FROM room JOIN hotel ON room.hotelno = hotel.hotelno JOIN booking ON hotel.hotelno = booking.hotelno WHERE hotelname="Grosvenor" AND datefrom<CURDATE() AND dateto>CURDATE() GROUP BY hotelname;
+
+15) List the rooms that are currently unoccupied at the Grosvenor Hotel.
+SELECT roomno, hotelname, datefrom, dateto FROM booking JOIN hotel ON booking.hotelno = hotel.hotelno WHERE hotelname="Grosvenor" AND dateto<CURDATE() AND datefrom>CURDATE();
+
+16) What is the lost income from unoccupied rooms at the Grosvenor Hotel?
+SELECT sum(price) as total_lost FROM hotel JOIN room ON hotel.hotelno = room.hotelno JOIN booking ON room.roomno = booking.roomno WHERE hotelname="Grosvenor" AND dateto<CURDATE() AND datefrom>CURDATE() GROUP BY hotelname;
+
+17) List the number of rooms in each hotel in London?
+SELECT city, roomno FROM room JOIN hotel ON room.hotelno = hotel.hotelno WHERE city="London";
+
+18) What is the most commonly booked room type for each hotel in London?
+SELECT hotelname, type, city, count(*) FROM hotel JOIN room ON hotel.hotelno = room.hotelno WHERE city="London" GROUP BY hotelname, type;
+
+19) Update the price of all rooms by 5%.
+UPDATE room SET price=(price*1.05);

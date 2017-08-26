@@ -1,0 +1,52 @@
+#Aanmaken van bestand
+touch exercise3.txt
+gedit exercise3.txt
+
+#Normalisation 
+
+#UNF
+
+DB(PatientNo, FullName, BedNumber, WardNumber, WardName, DrugNumber, Name, Description, Dosage, MethodOfAdmin, UnitsPerDay, StartDate, FinishDate)
+
+#1NF
+
+DB_Patient(PatiëntNo(PK), FullName)
+
+DB_Ward(WardNumber(PK), WardName)
+
+DB_Drug(DrugNumber(PK), Name, Description, Dosage, MethodOf Admin, UnitsPerDay, StartDate, FinishDate)
+
+#2NF
+
+DB_Patient(PatiëntNo(PK), FullName)
+
+DB_Ward(WardNumber(PK), WardName)
+
+DB_Drug(DrugNumber(PK), Name, Description, Dosage, MethodOfAdmin, UnitsPerDay)
+
+DB_Date(StartDate, FinishDate, PatiëntNo(FK))
+
+#3NF
+
+DB_Patient(PatiëntNo(PK), FullName)
+
+DB_Ward(WardNumber(PK), WardName)
+
+DB_Drug(DrugNumber(PK), Name, Description, Dosage, MethodOfAdmin, UnitsPerDay)
+
+DB_Date(StartDate, FinishDate, PatiëntNo(FK))
+
+#BCNF
+
+DB_Patient(PatiëntNo(PK), FullName)
+
+DB_Ward(WardNumber(PK), WardName, PatientNo(FK))
+
+DB_Drug(DrugNumber(PK), Name, Description, Dosage, MethodOfAdmin, UnitsPerDay, PatientNo(FK))
+
+DB_Date(StartDate, FinishDate, PatiëntNo(FK))
+
+git status
+git add exercise3.txt
+git commit -m "volledig"
+git push -u origin master

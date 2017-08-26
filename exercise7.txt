@@ -1,0 +1,20 @@
+$ mongoimport --db test --collection restaurants --drop --file ./retaurants.json
+in mongodb
+use test
+show tables
+
+Using robomongo:
+	cd Databanktechnologie/robomonogo-0.0.0-linux-x86_64-0786489/
+	cd bin
+	./robomongo
+
+
+1) Display the fields restaurant_id, name, borough and cuisine for all the documents in  the collection restaurant.
+db.restaurants.find({}, {"restaurant_id": 1}, {"name": 1}, {"borough": 1}, {"cuisine": 1})
+
+2) Display the second group of 5 restaurants which are in the borough Bronx.
+db.restaurants.find({}, {"restaurants": 1}, {"borough": "Bronx"}).limit(5)
+
+3)Find the restaurants who achieved a score more than 90.
+db.restaurants.find({"grades": {$elemMatch: {"score": {$gt: 90}}}})
+
