@@ -1,0 +1,9 @@
+mkdir exercises
+touch exercise1.txt
+gedit exercise1.txt
+site github: make new repository
+	git remote add origin https://github.com/matcla1111/exercices.git
+git status
+git add exercise1.txt
+git commit -m "1e oefening"
+	git push -u origin master
